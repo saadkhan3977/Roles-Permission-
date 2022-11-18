@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="{{asset('/admin/plugins/summernote/summernote-bs4.min.css')}}">
   <!-- Toastr -->
   <link rel="stylesheet" href="{{asset('/admin/plugins/toastr/toastr.min.css')}}">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -185,6 +186,14 @@
               @endcan
             </ul>
           </li> 
+          @endcan
+          @can('change-password')
+          <li class="nav-item">
+            <a href="{{route('change_password')}}" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Change Password</p>
+            </a>
+          </li>
           @endcan
           <!-- <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
@@ -848,6 +857,43 @@
 
 <!-- Toastr -->
 <script src="{{asset('/admin/plugins/toastr/toastr.min.js')}}"></script>
+<script>
+@if(session('success'))
+  toastr.success("{{session('success')}}");
+@endif
+@if(session('error'))
+  toastr.error("{{session('error')}}")
+@endif
+@if($errors->any())
+    @foreach ($errors->all() as $error)
+    toastr.error("{{$error}}")
+    @endforeach
+@endif
+</script>
+
+<!-- Change password -->
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $('.validatedForm').validate({
+        rules : {
+            password : {
+                minlength : 8
+            },
+            password_confirmation : {
+                minlength : 8,
+                equalTo : "#password"
+            }
+        }
+
+
+
+});
+   $('button').click(function(){
+    $('.validatedForm').valid();
+});
+</script>
+
+
 <!-- DataTables  & Plugins -->
 <script src="{{asset('/admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>

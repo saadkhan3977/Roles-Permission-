@@ -27,6 +27,8 @@ Auth::routes(['verify' => true]);
 
 
 Route::group(['middleware' => ['auth','verified']], function(){
+    Route::get('/change_password', [DashboardController::class, 'change_password'])->name('change_password');
+    Route::post('/store_change_password', [DashboardController::class, 'store_change_password'])->name('store_change_password');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('home');
     Route::resource('roles', RoleController::class);
     Route::resource('permission', PermissionController::class);
