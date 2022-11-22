@@ -52,8 +52,8 @@
       </form>
 
       
+      <a href="{{route('signup')}}" class="text-center">Register a new membership</a>
       <p class="mb-0">
-        <a href="{{route('register')}}" class="text-center">Register a new membership</a>
       </p>
     </div>
     <!-- /.card-body -->

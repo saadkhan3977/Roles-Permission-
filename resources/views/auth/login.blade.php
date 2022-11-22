@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="{{asset('/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('/admin/dist/css/adminlte.min.css')}}">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="{{asset('/admin/plugins/toastr/toastr.min.css')}}">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -71,7 +73,7 @@
 
       
       <p class="mb-0">
-        <a href="{{route('register')}}" class="text-center">Register a new membership</a>
+        <a href="{{route('signup')}}" class="text-center">Register a new membership</a>
       </p>
       <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
@@ -89,5 +91,21 @@
 <script src="{{asset('/admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/admin/dist/js/adminlte.min.js')}}"></script>
+
+<!-- Toastr -->
+<script src="{{asset('/admin/plugins/toastr/toastr.min.js')}}"></script>
+<script>
+@if(session('success'))
+  toastr.success("{{session('success')}}");
+@endif
+@if(session('error'))
+  toastr.error("{{session('error')}}")
+@endif
+@if($errors->any())
+    @foreach ($errors->all() as $error)
+    toastr.error("{{$error}}")
+    @endforeach
+@endif
+</script>
 </body>
 </html>

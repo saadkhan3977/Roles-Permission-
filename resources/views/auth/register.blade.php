@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="{{asset('/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('/admin/dist/css/adminlte.min.css')}}">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="{{asset('/admin/plugins/toastr/toastr.min.css')}}">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -22,35 +24,23 @@
       <!-- <a href="/admin/index2.html" class="h1"><b>Admin</b>LTE</a> -->
     </div>
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+<div class="row">
+          <div class="col-12">
+              <div class="card">
+                  <div class="card-header">
+                  <form method="post" action="{{ route('register') }}">
+                    @csrf
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>Name:</strong>
+                                <input class="form-control" name="name" value="{{ old('name') }}" required>
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>Email:</strong>
+                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" required>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -58,13 +48,10 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>Password:</strong>
+                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" required>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -72,30 +59,36 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>Confirm Password:</strong>
+                                <input class="form-control" type="password" name="confirm-password" required>
                             </div>
                         </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <strong>Role:</strong>
+                                <select name="roles" class="form-control" required="required">
+                                    <option disabled selected valüe="">select role</option>
+                                    @foreach($roles as $role)
+                                    
+                                    <option value="{{$role->name}}">{{$role->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                  </form>
+                  </div>
+              </div> 
+          </div>   
         </div>
-    </div>
 </div>
+<a href="{{route('login')}}" class="text-center">Sign in</a>
 <p class="mb-0">
-        <a href="{{route('login')}}" class="text-center">Sign in</a>
       </p>
       <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
@@ -113,5 +106,21 @@
 <script src="{{asset('/admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/admin/dist/js/adminlte.min.js')}}"></script>
+
+<!-- Toastr -->
+<script src="{{asset('/admin/plugins/toastr/toastr.min.js')}}"></script>
+<script>
+@if(session('success'))
+  toastr.success("{{session('success')}}");
+@endif
+@error('password')
+  toastr.error("{{$message}}")
+@enderror
+@if($errors->any())
+    @foreach ($errors->all() as $error)
+    toastr.error("{{$error}}")
+    @endforeach
+@endif
+</script>
 </body>
 </html>
