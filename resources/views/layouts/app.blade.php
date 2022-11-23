@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="{{asset('/admin/plugins/summernote/summernote-bs4.min.css')}}">
   <!-- Toastr -->
   <link rel="stylesheet" href="{{asset('/admin/plugins/toastr/toastr.min.css')}}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{{asset('/admin/plugins/summernote/summernote-bs4.min.css')}}s">
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -181,14 +183,158 @@
             </ul>
           </li> 
           @endcan
-          @can('change-password')
+          @can('package-list')
           <li class="nav-item">
-            <a href="{{route('change_password')}}" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Change Password</p>
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Manage Packages
+                <i class="fas fa-angle-left right"></i>
+              </p>
             </a>
-          </li>
+            <ul class="nav nav-treeview">
+              @can('package-list')
+              <!-- @can('permission-list') -->
+              <li class="nav-item">
+                <a href="{{route('packages.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List Packages</p>
+                </a>
+              </li>
+              @endcan
+              <!-- @endcan -->
+              @can('package-create')
+              <li class="nav-item">
+                <a href="{{route('packages.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Packages</p>
+                </a>
+              </li>
+              @endcan
+            </ul>
+          </li> 
           @endcan
+          @can('category-list')
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Manage Category
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @can('category-list')
+              <!-- @can('permission-list') -->
+              <li class="nav-item">
+                <a href="{{route('category.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List Categories</p>
+                </a>
+              </li>
+              @endcan
+              <!-- @endcan -->
+              @can('category-create')
+              <li class="nav-item">
+                <a href="{{route('category.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add category</p>
+                </a>
+              </li>
+              @endcan
+            </ul>
+          </li> 
+          @endcan
+
+          @can('subcategory-list')
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Manage Sub Category
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @can('subcategory-list')
+              <!-- @can('permission-list') -->
+              <li class="nav-item">
+                <a href="{{route('subcategory.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List Sub Categories</p>
+                </a>
+              </li>
+              @endcan
+              <!-- @endcan -->
+              @can('subcategory-create')
+              <li class="nav-item">
+                <a href="{{route('subcategory.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Sub Category</p>
+                </a>
+              </li>
+              @endcan
+            </ul>
+          </li> 
+          @endcan
+          @can('product-list')
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Manage Products
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @can('product-list')
+              <!-- @can('permission-list') -->
+              <li class="nav-item">
+                <a href="{{route('product.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>List Products</p>
+                </a>
+              </li>
+              @endcan
+              <!-- @endcan -->
+              @can('product-create')
+              <li class="nav-item">
+                <a href="{{route('product.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Product</p>
+                </a>
+              </li>
+              @endcan
+            </ul>
+          </li> 
+          @endcan
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Account Setting
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <!-- @can('permission-list') -->
+              <li class="nav-item">
+                <a href="{{route('profile.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Profile</p>
+                </a>
+              </li>
+              <!-- @endcan -->
+              <li class="nav-item">
+                <a href="{{route('change_password')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Change Password</p>
+                </a>
+              </li>
+            </ul>
+          </li> 
+
+
           <li class="nav-item">
             <a href="{{url('/logout')}}" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
@@ -907,8 +1053,14 @@
 <script src="{{asset('/admin/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('/admin/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('/admin/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+<!-- Summernote -->
+<script src="{{asset('/admin/plugins/summernote/summernote-bs4.min.js')}}"></script>
+
 <script>
   $(function () {
+    $('#summernote').summernote();
+    $('#summernote1').summernote();
+
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": true,
       "buttons": ["csv", "excel", "pdf", "print"]

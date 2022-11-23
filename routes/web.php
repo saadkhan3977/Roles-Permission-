@@ -7,6 +7,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PackagesController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,4 +39,10 @@ Route::group(['middleware' => ['auth','verified']], function(){
     Route::resource('roles', RoleController::class);
     Route::resource('permission', PermissionController::class);
     Route::resource('users', UserController::class);
+    Route::resource('packages', PackagesController::class);
+    Route::resource('category', CategoryController::class);
+    Route::resource('subcategory', SubCategoryController::class);
+    Route::get('/profile', [DashboardController::class, 'profile'])->name('profile.index');
+    Route::post('/profile/update', [DashboardController::class, 'update'])->name('profile.update');
+    Route::resource('product', ProductController::class);
 });

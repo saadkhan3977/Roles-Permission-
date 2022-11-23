@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use Hash;
 use Validator;
+use App\Models\User;
+use Session;
 
 class DashboardController extends Controller
 {
@@ -28,7 +30,29 @@ class DashboardController extends Controller
     {
         return view('home');
     }
+    
+    public function profile()
+    {
+        return view('profile');
+    }
+    
+    public function update(Request $request)
+    {
+        $id = Auth::user()->id;
+        $this->validate($request, [
+            'name' => 'required',
+            'phone' => 'required',
+        ]);
+    
+        $input = $request->all();
+    
+        $user = User::find($id);
+        $user->update($input);
 
+        session::flash('success','Record Updated Successfully');
+        return redirect()->back();
+
+    }
 
     public function change_password()
     {
